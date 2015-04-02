@@ -1,0 +1,48 @@
+#
+# Copyright (C) 2011 Claus Christmann
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+
+
+// This file contains the CMAKE configured #define's used for the compilation of VRONI
+#cmakedefine   OGL_GRAPHICS
+#cmakedefine   NDEBUG
+#cmakedefine   RANDOM
+#cmakedefine   INFO
+#cmakedefine   MAT
+#cmakedefine   GENUINE_ARCS
+#cmakedefine   MIC
+#cmakedefine   X11_GRAPHICS
+#cmakedefine   GRAPHICS
+#cmakedefine   DEBUG_MEMORY
+#cmakedefine   WARN
+#cmakedefine   TRACE
+#cmakedefine   SORTED
+#cmakedefine   INVERSE
+#cmakedefine   ORDERED
+#cmakedefine   OTHER
+#cmakedefine   EXT_APPL_SITES
+#cmakedefine   EXT_APPL_PNTS
+#cmakedefine   EXT_APPL_VD
+#cmakedefine   EXT_APPL_OFF
+#cmakedefine   EXT_APPL_WMAT
+#cmakedefine   WMAT
+#cmakedefine   ARC_APX
+#cmakedefine   BOOL_DEFINED
+#cmakedefine   NO_CPUTIME
+#cmakedefine   API_PARABOLIC
+#cmakedefine   FORCED
+#cmakedefine   IPE5 

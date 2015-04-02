@@ -1,0 +1,163 @@
+#
+# CMake options file to set compile time flags for Martin Held's VRONI.
+#
+# Copyright (C) 2011 Claus Christmann
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+
+
+# These are the compile time optins for the VRONI code.
+# Currently they are a direct relfection of all available preprocessor flags although
+# some of them could be grouped together (e.g. GRAPHICS, OGL_GRAPHICS, X11_GRAPHICS)
+set(ALL_VRONI_PREPROCESSOR_OPTIONS 
+  OGL_GRAPHICS
+  NDEBUG
+  RANDOM
+  INFO
+  MAT
+  GENUINE_ARCS
+  MIC
+  X11_GRAPHICS
+  GRAPHICS
+  DEBUG_MEMORY
+  WARN
+  TRACE
+  SORTED
+  INVERSE
+  ORDERED
+  OTHER
+  EXT_APPL_SITES
+  EXT_APPL_PNTS
+  EXT_APPL_VD
+  EXT_APPL_OFF
+  EXT_APPL_WMAT
+  WMAT
+  ARC_APX
+  BOOL_DEFINED
+  NO_CPUTIME
+  API_PARABOLIC
+  FORCED
+  IPE5 
+)
+
+
+
+
+# Here are the option commands directly setting these options 
+
+# Basic options
+option( GENUINE_ARCS
+  "used to include code for the handling of genuine circular arcs by VRONI. Setting this flag is only permissible if you have received the files for handling genuine circular  arcs without VRONI-internal approximation."
+  ON)
+option( RANDOM
+  "insert the sites in random order into the VD. this is the best insertion order, and it is recommended for your use!!"
+  ON)
+option( ARC_APX
+  "add one integer field to the \"pnt\" and \"seg\" records in order to support the recovery of an approximate VD for circular arcs. required if VRONI shall handle circular arcs, and a waste of memory for purely polygonal data. Useless in conjunction with \"GENUINE_ARCS\" ON."
+  OFF)
+option( NDEBUG
+  "don't execute \"assert\" statements; NDEBUG=OFF is only used for debugging purposes and will slow down the program!!! it is strongly recommended to use NDEBUG=ON for production runs of this code! however, while experimenting with the code it may be smart to turn on VRONI's assertions. (but don't complain about a lack of speed while testing with VRONI's assertions turned on!)"
+  OFF)
+option( INFO
+  "print out information on the status of the algorithm; note that the macros VD_Warning() and VD_Info() are disabled if INFO=ON is not specified; genuine error messages are always printed, though. nevertheless, it is smart to set INFO=ON at least while experimenting with VRONI."
+  ON)
+
+# Graphincs related options
+option( GRAPHICS 
+  "be prepared for interactive graphics; no graphics window will be opened but graphics data will be generated and stored in \"drawing buffers\", see redraw.c. this option should only be used if required (since the generation of graphics data consumes time and memory)."
+  OFF)
+option( OGL_GRAPHICS
+  "required for OpenGL graphics; implies GRAPHICS ON."
+  OFF)
+option( X11_GRAPHICS
+  "required for X11 graphics; implies GRAPHICS ON"
+  OFF)
+
+# flags for adapting VRONI to a different platform
+option( RAND
+  "use this flag if random() is not available on your system. also, keep an eye on the value of RND_MAX that is appropriate for your system. (experience tells me that the constant RAND_MAX may not be properly defined on some systems; for this reason, I'm using my own constant...)"
+  ON)
+option( BOOL_DEFINED 
+  "use this flag if your C++ compiler applies the C++ keywords \"bool\", \"true\", and \"false\" also to .c and .h files. (experience tells me that BOOL_DEFINED OFF should work for most C/C++ compilers.)"
+  ON)
+option( CPUTIME_IN_MILLISECONDS
+  ""
+  OFF)
+option( CPUTIME_VIA_CLOCK
+  ""
+  OFF)
+option( NO_CPUTIME
+  "the code uses routines for timing the cpu-consumption. unfortunately, these routines are platform-specific... please see elapsed.c for details. if no timing of the cpu-consumption is needed or if the header files needed for the other compile-time options do not exist on your system, then use \"NO_CPUTIME\". (in that case it does not matter how the other compile-time options are set.)"
+  ON)
+
+# flags that include code or add extra fields to data structures
+option( WMAT 
+  "allocate additional data for the weighted medial axis transform. note: this will roughly double the memory"
+  ON)
+option( MAT 
+  "allocate one additional flag for the medial axis transform. this option is implied if -DWMAT is defined. use this flag to generate only the MAT rather than a genuine WMAT. required if my MAT code is to be used."
+  ON)
+option( MIC 
+  "code for determining a maximum inscribed (empty) circle is included into the build."
+  ON)
+option( EXT_APPL_PNTS 
+  "add one field to the \"pnt\" record; this field may hold application-specific data."
+  OFF)
+option( EXT_APPL_SITES 
+  "add one field to the \"seg\" and \"arc\" records; this field may hold application-specific data."
+  ON)
+option( EXT_APPL_VD 
+  "add one field to the \"node\" and \"edge\" records; this field may hold application-specific data."
+  OFF)
+option( EXT_APPL_OFF 
+  "add one field to the \"node\" and \"edge\" records; this field may hold application-specific data."
+  OFF)
+option( EXT_APPL_WMAT 
+  "add one field to the \"w_mat_data\" record; this field may hold application-specific data."
+  OFF)
+
+# flags used purely within Held's own work
+option( SORTED
+  "insert the segments according to their length (in increasing order); used for Held's personal experiments, and not recommended for practical use."
+  OFF)
+option( INVERSE
+  "insert the segments according to their length (in decreasing order). note that this flag requires the use of SORTED! used for Held's personal experiments, and not recommended for practical use."
+  OFF)
+option( ORDERED
+  "insert the sites in the order they were stored; only used for Held's debugging purposes!"
+  OFF)
+option( FORCED
+  "insert the sites according to the order stored in the files \"forced_order_pnts.txt\", \"forced_order_segs.txt\", and \"forced_order_arcs.txt\". this flag is for Held's personal debugging purposes; please do not use it unless instructed by Held!"
+  OFF)
+option( DEBUG_MEMORY
+  "keep track of memory allocation and deallocation. only used for debugging purposes; slows down the program! (specifying this option won't cause any crucial harm, though, and it can be used for your own tests.)"
+  OFF)
+option( WARN
+  "print out debug warnings about the status of the algorithm;  purely used for Held's debugging purposes; may slow down the code."
+  OFF)
+option( TRACE
+  "print out status information in order to trace the execution of the program; only used for Held's debugging purposes!!"
+  OFF)
+option( OTHER
+  "generate input data for other Voronoi codes; won't work  except within Held's own computing environment!!"
+  OFF)
+option( API_PARABOLIC
+  "should only be defined if you have received utility functions for approximating parabolic arcs and intersecting  VD edges with circles. note: those routines are not part of  VRONI proper!"
+  OFF)
+option( IPE5
+  "for IPE 5 export format, otherwise IPE 6 xml-format"
+  OFF)
+
